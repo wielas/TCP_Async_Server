@@ -57,26 +57,7 @@ namespace TCP_Async_Server
             TcpClient.Close();
         }
 
-        /// <summary>
-        /// Calculates ammount of each letter in a message
-        /// </summary>
-        /// <param name="message">Message sent by client</param>
-        /// <returns>Count of each letter in meesage</returns>
-        private static string CalculateLetterCount(string message)
-        {
-            message = message.Substring(0, message.IndexOf('\0'));
-
-            var query = message.GroupBy(c => c).Select(c => new { Char = c.Key, Count = c.Count() });
-
-            string response = "";
-
-            foreach (var result in query)
-            {
-                if (result.Count > 0 && result.Count < 100 && result.Char != ' ') response += ("Char " + result.Char + " appears " + result.Count + " times\n");
-            }
-
-            return response;
-        }
+        
 
         /// <summary>
         /// Takes incoming messages and returns answer
@@ -94,7 +75,6 @@ namespace TCP_Async_Server
             while (true)
             {
                 int msg_len = stream.Read(buffer, 0, 1024);
-                //Console.WriteLine(buffer[0]);
 
                 if (buffer[0] >= 49 && buffer[0] <= 57 && buffer[1] >= 48 && buffer[1] <= 57)
                 {
